@@ -1,5 +1,5 @@
 <template>
-    <h1>Zenith's To-Do List</h1>
+    <h1>{{store.currentCat.name}}'s To-Do List</h1>
 
     <ul>
         <li v-for="todo in store.todos" v-bind:key="todo.id"
