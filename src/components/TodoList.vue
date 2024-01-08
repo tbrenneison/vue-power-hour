@@ -10,7 +10,7 @@
     </ul>
 
     <p>Todos Completed: {{  todosComplete }}</p>
-    <p>Todos Left: {{ todosInComplete }}</p>
+    <p>Todos Left: {{ todosIncomplete }}</p>
 
     <form v-on:submit.prevent="addTodo">
         Item: 
@@ -24,11 +24,10 @@
 
 </template>
 
-<script>
-export default {
-    data() { 
-        return { 
-            todos: [
+<script setup>
+import { ref, reactive, computed } from 'vue'
+
+const todos = reactive([
                 {
                     id: 1,
                     item: "Put my dirty litterbox paw in Momther's food", 
@@ -49,32 +48,83 @@ export default {
                     item: "Open all the closet doors and have a look", 
                     isComplete: false
                 }
-            ],
-            currentTodoId: 5,
-            newTodo: {}
-        }
-    },
-    computed: { 
-        todosComplete() { 
-            return this.todos.filter((todo) => {
+])
+
+const newTodo = reactive({})
+const currentTodoId = ref(5) 
+
+const todosComplete = computed(() => {
+    return todos.filter((todo) => {
                 return todo.isComplete
             }).length;
-        },
-        todosInComplete() { 
-            return this.todos.filter((todo) => {
+}) 
+
+const todosIncomplete = computed(() => {
+    return todos.filter((todo) => {
                 return !todo.isComplete
             }).length;
-        }
-    },
-    methods: { 
-        addTodo() { 
-            this.newTodo.id = this.currentTodoId; 
-            this.todos.push(this.newTodo); 
-            this.newTodo = {}; 
-            this.currentTodoId++; 
-        }
-    }
+}) 
+
+function addTodo() { 
+    let add = {...newTodo}
+    add.id = currentTodoId;
+    todos.push(add);
+    newTodo.id = undefined; 
+    newTodo.item = ''; 
+    newTodo.isComplete = false;
+    currentTodoId.value++;
+
 }
+// export default {
+//     data() { 
+//         return { 
+//             todos: [
+//                 {
+//                     id: 1,
+//                     item: "Put my dirty litterbox paw in Momther's food", 
+//                     isComplete: false
+//                 },
+//                 {
+//                     id: 2,
+//                     item: "Roll around on Father's black pants", 
+//                     isComplete: false
+//                 },
+//                 {
+//                     id: 3,
+//                     item: "Trigger the Litter Robot to cycle for no reason", 
+//                     isComplete: false
+//                 },
+//                 {
+//                     id: 4,
+//                     item: "Open all the closet doors and have a look", 
+//                     isComplete: false
+//                 }
+//             ],
+//             currentTodoId: 5,
+//             newTodo: {}
+//         }
+//     },
+    // computed: { 
+    //     todosComplete() { 
+    //         return this.todos.filter((todo) => {
+    //             return todo.isComplete
+    //         }).length;
+    //     },
+    //     todosInComplete() { 
+    //         return this.todos.filter((todo) => {
+    //             return !todo.isComplete
+    //         }).length;
+    //     }
+    // },
+//     methods: { 
+//         addTodo() { 
+//             this.newTodo.id = this.currentTodoId; 
+//             this.todos.push(this.newTodo); 
+//             this.newTodo = {}; 
+//             this.currentTodoId++; 
+//         }
+//     }
+// }
 </script>
 
 <style>
