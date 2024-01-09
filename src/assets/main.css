@@ -1,1 +1,17 @@
 @import './base.css';
+
+html { 
+  background-image:url('cat-background.png');
+  background-size: 100px;
+
+}
+body { 
+  margin: 35px; 
+  padding: 10px; 
+  border: 1px solid hotpink;
+  background-color: white;
+}
+
+#app { 
+  background-color: white;
+}
