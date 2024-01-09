@@ -5,7 +5,7 @@
         <li v-for="todo in store.todos" v-bind:key="todo.id"
             v-bind:class="{completed: todo.isComplete}">
             <input type="checkbox" v-model="todo.isComplete">
-            {{ todo.item }}
+            {{ todo.item }} <span v-show="todo.isComplete">COMPLETE</span>
         </li>
     </ul>
 
@@ -31,7 +31,6 @@ import TodoForm from '@/components/TodoForm.vue'
 import { useTodoStore } from '@/stores/todo.js'
 
 const store = useTodoStore(); 
-
 
 //all of this has been moved to the pinia store! 
 
